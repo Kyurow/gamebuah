@@ -24,7 +24,7 @@ function resetGame() {
     fruits = [];
     spawnStartTime = Date.now();
     lastSpawnTime = Date.now();
-    spawnMax = 5; // Tetap 5 sesuai permintaan Anda
+    spawnMax = 1; // Kembali ke 1
     player.x = canvas.width / 2 - player.width / 2;
 }
 
@@ -66,7 +66,7 @@ fruitImages.push(bananaImage);
 
 // Anggur
 var grapesImage = new Image();
-grapesImage.src = "assets/images/anggur.png";s
+grapesImage.src = "assets/images/anggur.png"; 
 fruitImages.push(grapesImage);
 
 // **Status game**: skor, jumlah gagal (misses), dan flag game over
@@ -77,11 +77,11 @@ var gameOver = false;
 
 // **Objek pemain (karakter)** dengan properti awal
 var player = {
-    x: 80,  
-    y: 0,  
-    width: 30,  
-    height: 30,  
-    speed: 5  
+    x: 80,          
+    y: 0,            
+    width: 30,       
+    height: 30,      
+    speed: 5        
 };
 
 // Daftar buah-buah yang sedang jatuh
@@ -90,8 +90,8 @@ var fruits = [];
 // **Pengaturan spawn buah** (waktu mulai dan interval)
 var spawnStartTime = Date.now();
 var lastSpawnTime = Date.now();
-var spawnInterval = 1000; // 5 buah akan muncul setiap 1 detik
-var spawnMax = 5;         
+var spawnInterval = 1000; // Waktu antar spawn buah dalam milidetik (1 detik)
+var spawnMax = 1;         // Jumlah maksimal buah bersamaan (akan naik)
 
 // **Bunyi**: suara tangkap buah dan suara game over
 var catchSound = new Audio("assets/sounds/catch.wav");  
@@ -119,15 +119,15 @@ window.addEventListener("keyup", function(e) {
 
 // Fungsi membuat buah baru di posisi X acak atas canvas
 function spawnFruit() {
-    var idx = Math.floor(Math.random() * fruitImages.length);
+    var idx = Math.floor(Math.random() * fruitImages.length); // Pilih jenis buah secara acak
     var img = fruitImages[idx];
     var scale = 0.5;
     var fruit = {
         x: Math.random() * (canvas.width -img.width * scale), 
         y: -img.width * scale,  
         width: img.width * scale, 
-        height: img.width * scale,
-        speed: 1 + Math.random() * 2, // Kecepatan masih acak (1-3)
+        height: img.width * scale, 
+        speed: 1 + Math.random() * 2, // Kecepatan jatuh (acak antara 1-3)
         img: img
     };
     fruits.push(fruit);
@@ -137,18 +137,17 @@ function spawnFruit() {
 function gameLoop() {
     if (gameOver) return; // Jika game over, hentikan loop
 
-    // Bagian 'elapsed' sudah Anda komentari, itu sudah benar.
-    //var elapsed = (Date.now() - spawnStartTime) / 1000;
-    //if (elapsed > 1) spawnMax = 5;
-    //if (elapsed > 20) spawnMax = 3;
+    // Hitung waktu bermain (dalam detik) untuk menambah kesulitan
+    var elapsed = (Date.now() - spawnStartTime) / 1000;
+    // Setelah 10 detik, izinkan 2 buah muncul sekaligus
+    if (elapsed > 10) spawnMax = 2;
+    // Setelah 20 detik, izinkan 3 buah muncul sekaligus
+    if (elapsed > 20) spawnMax = 3;
 
-    // Spawn 5 buah baru setiap 1 detik
-    if (Date.now() - lastSpawnTime > spawnInterval) {
-        
-        for (var i = 0; i < spawnMax; i++) {
-            spawnFruit();
-        }
-        lastSpawnTime = Date.now(); 
+    // Spawn buah baru bila interval tercapai dan jumlah buah kurang dari spawnMax
+    if (Date.now() - lastSpawnTime > spawnInterval && fruits.length < spawnMax) {
+        spawnFruit();
+        lastSpawnTime = Date.now();
     }
 
     // Bersihkan canvas dan gambar ulang background
@@ -200,7 +199,7 @@ function gameLoop() {
             f.x <= player.x + player.width
         ) {
             score++;
-            catchSound.play();
+            catchSound.play(); 
             fruits.splice(i, 1); 
             i--;
             continue;
@@ -222,7 +221,7 @@ function gameLoop() {
                 ctx.textAlign = "center"; // Ditambahkan agar teks di tengah
                 
                 ctx.fillText("Terimakasih sudah main!", canvas.width/2 , canvas.height/2 - 10);
-      _          ctx.fillText("Score Anda: " + score, canvas.width/2 , canvas.height/2 + 5);
+                ctx.fillText("Score Anda: " + score, canvas.width/2 , canvas.height/2 + 5);
 
                 restartBtn.style.display = "block";
                 return; // Hentikan gameLoop di sini
@@ -239,5 +238,5 @@ function gameLoop() {
     // Lanjutkan loop game selama belum game over
     if (!gameOver) {
         requestAnimationFrame(gameLoop);
-  T }
+    }
 }
