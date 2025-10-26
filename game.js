@@ -93,7 +93,7 @@ var fruits = [];
 var spawnStartTime = Date.now();
 var lastSpawnTime = Date.now();
 var spawnInterval = 1000; // Waktu antar spawn buah dalam milidetik (1 detik). Bisa diubah.
-var spawnMax = 1;         // Jumlah maksimal buah bersamaan (akan naik setelah 10 detik)
+var spawnMax = 5;         // Jumlah maksimal buah bersamaan (akan naik setelah 10 detik)
 
 // **Bunyi**: suara tangkap buah dan suara game over
 var catchSound = new Audio("assets/sounds/catch.wav");         // Ganti nama file suara tangkap jika perlu
@@ -270,6 +270,7 @@ canvas.addEventListener("touchstart", function(e) {
         requestAnimationFrame(gameLoop);
     }
 }
+
 
 
 
