@@ -116,8 +116,8 @@ bgImage.onload = function() {
         ctx.fillStyle = "red";
         ctx.textAlign = "center";
 
-        ctx.fillText("Made by Fikhar", canvas.width / 2, canvas.height / 2 - 10);
-        ctx.fillText("NPM 24072123014 ", canvas.width / 2, canvas.height / 2.5 + 20);
+        ctx.fillText("Kelompok 4", canvas.width / 2, canvas.height / 2 - 10);
+        ctx.fillText("Selamat bermain hehe :)", canvas.width / 2, canvas.height / 2.5 + 20);
     
         // Tampilkan tombol restart
         
@@ -270,5 +270,6 @@ canvas.addEventListener("touchstart", function(e) {
         requestAnimationFrame(gameLoop);
     }
 }
+
 
 
