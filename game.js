@@ -152,7 +152,7 @@ function spawnFruit() {
     fruits.push(fruit);
 }
 
-// Fungsi utama: update dan gambar semua elemen
+// Fungsi utama: update dan gambar semua elemen, settingan mengatur jumlah buah yang muncul
 function gameLoop() {
     if (gameOver) return; // Jika game over, hentikan loop
 
@@ -270,6 +270,7 @@ canvas.addEventListener("touchstart", function(e) {
         requestAnimationFrame(gameLoop);
     }
 }
+
 
 
 
