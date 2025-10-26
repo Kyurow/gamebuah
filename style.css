@@ -73,11 +73,19 @@ button {
 }
 
 .mobile-controls button {
-  padding: 14px 24px;
-  font-size: 18px;
-  border-radius: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
+  padding: 14px 24px;
+  font-size: 18px;
+  border-radius: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+
+  /* --- TAMBAHAN UNTUK MATIKAN SELEKSI --- */
+  user-select: none; /* Standar modern */
+  -webkit-user-select: none; /* Untuk Safari/Chrome */
+  -moz-user-select: none; /* Untuk Firefox */
+  -ms-user-select: none; /* Untuk IE/Edge */
+  -webkit-touch-callout: none; /* Mematikan menu pop-up di iOS */
 }
+
