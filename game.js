@@ -157,16 +157,21 @@ function gameLoop() {
     if (gameOver) return; // Jika game over, hentikan loop
 
     // Hitung waktu bermain (dalam detik) untuk menambah kesulitan
-    var elapsed = (Date.now() - spawnStartTime) / 1000;
+    //var elapsed = (Date.now() - spawnStartTime) / 1000;
     // Setelah 10 detik, izinkan 2 buah muncul sekaligus
-    if (elapsed > 1) spawnMax = 5;
+    //if (elapsed > 1) spawnMax = 5;
     // Setelah 20 detik, izinkan 3 buah muncul sekaligus (bisa disesuaikan atau ditambah levelnya)
-    if (elapsed > 20) spawnMax = 3;
+    //if (elapsed > 20) spawnMax = 3;
 
     // Spawn buah baru bila interval tercapai dan jumlah buah kurang dari spawnMax
-    if (Date.now() - lastSpawnTime > spawnInterval && fruits.length < spawnMax) {
-        spawnFruit();
-        lastSpawnTime = Date.now();
+    if (Date.now() - lastSpawnTime > spawnInterval) {
+        
+        // GUNAKAN 'for' LOOP UNTUK MEMANGGIL spawnFruit() SEBANYAK 5x
+        for (var i = 0; i < spawnMax; i++) {
+            spawnFruit();
+        }
+
+        lastSpawnTime = Date.now(); // Reset timer-nya SETELAH 5 buah dibuat
     }
 
     // Bersihkan canvas dan gambar ulang background
@@ -270,6 +275,7 @@ canvas.addEventListener("touchstart", function(e) {
         requestAnimationFrame(gameLoop);
     }
 }
+
 
 
 
