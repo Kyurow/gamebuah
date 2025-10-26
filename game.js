@@ -24,7 +24,7 @@ function resetGame() {
     fruits = [];
     spawnStartTime = Date.now();
     lastSpawnTime = Date.now();
-    spawnMax = 1; // Kembali ke 1
+    spawnMax = 1;
     player.x = canvas.width / 2 - player.width / 2;
 }
 
@@ -47,9 +47,11 @@ var ctx = canvas.getContext("2d");
 // Load gambar latar belakang (background), karakter, dan buah-buahan
 var bgImage = new Image();
 bgImage.src = "assets/images/BACKGROUND.png"; 
+// ^ GANTI jika path gambar latar berbeda
 
 var playerImage = new Image();
 playerImage.src = "assets/images/karakterfinal.png"; 
+// ^ GANTI jika nama atau lokasi gambar karakter berbeda
 
 // Buah-buahan: jeruk, pisang, anggur
 var fruitImages = [];
@@ -72,16 +74,16 @@ fruitImages.push(grapesImage);
 // **Status game**: skor, jumlah gagal (misses), dan flag game over
 var score = 0;
 var misses = 0;
-var maxMisses = 3;   // <-- PERBAIKAN: Diubah dari 0 ke 3 (untuk 3 nyawa)
+var maxMisses = 0;   // <-- KODE ASLI: Nilainya 0
 var gameOver = false;
 
 // **Objek pemain (karakter)** dengan properti awal
 var player = {
-    x: 80,          
-    y: 0,            
-    width: 30,       
-    height: 30,      
-    speed: 5        
+    x: 80,          // Posisi X (dapat disesuaikan, akan diatur ulang saat background load)
+    y: 0,            // Posisi Y (akan diatur ulang saat background load)
+    width: 30,       // Lebar karakter (ubah agar sesuai ukuran gambar karakter)
+    height: 30,      // Tinggi karakter (ubah sesuai gambar karakter)
+    speed: 5        // Kecepatan gerak karakter (atur lebih tinggi untuk karakter lebih cepat)
 };
 
 // Daftar buah-buah yang sedang jatuh
@@ -90,22 +92,40 @@ var fruits = [];
 // **Pengaturan spawn buah** (waktu mulai dan interval)
 var spawnStartTime = Date.now();
 var lastSpawnTime = Date.now();
-var spawnInterval = 1000; // Waktu antar spawn buah dalam milidetik (1 detik)
-var spawnMax = 1;         // Jumlah maksimal buah bersamaan (akan naik)
+var spawnInterval = 1000; // Waktu antar spawn buah dalam milidetik (1 detik). Bisa diubah.
+var spawnMax = 1;         // Jumlah maksimal buah bersamaan (akan naik setelah 10 detik)
 
 // **Bunyi**: suara tangkap buah dan suara game over
-var catchSound = new Audio("assets/sounds/catch.wav");  
-var gameOverSound = new Audio("assets/sounds/endsound.mp3");  
+var catchSound = new Audio("assets/sounds/catch.wav");         // Ganti nama file suara tangkap jika perlu
+var gameOverSound = new Audio("assets/sounds/endsound.mp3");   // Ganti nama file suara game over jika perlu
 
-// Setelah gambar latar load, atur ukuran canvas dan pos karakter
+// Setelah gambar latar load, atur ukuran canvas dan pos karakter, lalu mulai game loop
 bgImage.onload = function() {
     // Sesuaikan canvas dengan ukuran background
     canvas.width = bgImage.width;
     canvas.height = bgImage.height;
     // Posisi karakter di atas background (sedikit jarak dari bawah)
     player.y = canvas.height - player.height - 10;
-    
-    // <-- PERBAIKAN: Blok 'if (misses >= maxMisses)' yang salah sudah dihapus dari sini.
+    // Mulai loop utama game
+    
+    // <-- KODE ASLI: Ini adalah blok 'if' yang bermasalah
+    if (misses >= maxMisses) {
+        gameOver = true;
+        gameOverSound.play();
+        
+        ctx.font = "bold 10px Arial";
+        ctx.fillStyle = "red";
+        ctx.textAlign = "center";
+
+        ctx.fillText("Kelompok 4", canvas.width / 2, canvas.height / 2 - 10);
+        ctx.fillText("Selamat bermain hehe :)", canvas.width / 2, canvas.height / 2.5 + 20);
+    
+        // Tampilkan tombol restart
+        
+   
+       
+        return;
+    }
 };
 
 // **Input keyboard** untuk gerakan karakter
@@ -123,11 +143,11 @@ function spawnFruit() {
     var img = fruitImages[idx];
     var scale = 0.5;
     var fruit = {
-        x: Math.random() * (canvas.width -img.width * scale), 
-        y: -img.width * scale,  
-        width: img.width * scale, 
-        height: img.width * scale, 
-        speed: 1 + Math.random() * 2, // Kecepatan jatuh (acak antara 1-3)
+        x: Math.random() * (canvas.width -img.width * scale), // Posisi horizontal acak (30 = lebar perkiraan buah)
+        y: -img.width * scale,     // Mulai di luar layar (atas)
+        width: img.width * scale,  // Lebar buah (sesuaikan jika perlu memperbesar/memperkecil)
+        height: img.width * scale, // Tinggi buah (sesuaikan sesuai proporsi gambar)
+        speed: 1 + Math.random() * 2, // Kecepatan jatuh (acak antara 2-4). Atur di sini untuk mengubah kecepatan buah.
         img: img
     };
     fruits.push(fruit);
@@ -141,8 +161,8 @@ function gameLoop() {
     var elapsed = (Date.now() - spawnStartTime) / 1000;
     // Setelah 10 detik, izinkan 2 buah muncul sekaligus
     if (elapsed > 10) spawnMax = 2;
-    // Setelah 20 detik, izinkan 3 buah muncul sekaligus
-    if (elapsed > 20) spawnMax = 3;
+    // Setelah 20 detik, izinkan 3 buah muncul sekaligus (bisa disesuaikan atau ditambah levelnya)
+.   if (elapsed > 20) spawnMax = 3;
 
     // Spawn buah baru bila interval tercapai dan jumlah buah kurang dari spawnMax
     if (Date.now() - lastSpawnTime > spawnInterval && fruits.length < spawnMax) {
@@ -154,7 +174,8 @@ function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
 
-    // Gerakkan karakter berdasarkan input
+    // Gerakkan karakter berdasarkan input (tombol panah atau A/D)
+    // Gerakkan karakter berdasarkan input keyboard atau sentuhan layar
     if (keys["ArrowLeft"] || keys["a"] || keys["A"] || isTouchingLeft) {
         player.x -= player.speed;
     }
@@ -168,21 +189,33 @@ function gameLoop() {
         player.x = canvas.width - player.width;
     }
 
-    // Kontrol mobile
-    canvas.addEventListener("touchstart", function(e) {
-        const touchX = e.touches[0].clientX;
-        if (touchX < canvas.width / 2) {
-          isTouchingLeft = true;
-        } else {
-          isTouchingRight = true;
-        }
-    });
+    // Kontrol mobile: sentuh layar kiri/kanan
+canvas.addEventListener("touchstart", function(e) {
+    const touchX = e.touches[0].clientX;
+    if (touchX < canvas.width / 2) {
+      isTouchingLeft = true;
+    } else {
+      isTouchingRight = true;
+    }
+  });
   
-    canvas.addEventListener("touchend", function() {
-        isTouchingLeft = false;
-        isTouchingRight = false;
-    });
+ // Kontrol mobile: sentuh layar kiri/kanan
+canvas.addEventListener("touchstart", function(e) {
+    const touchX = e.touches[0].clientX;
+    if (touchX < canvas.width / 2) {
+      isTouchingLeft = true;
+    } else {
+      isTouchingRight = true;
+    }
+  });
   
+  canvas.addEventListener("touchend", function() {
+    isTouchingLeft = false;
+    isTouchingRight = false;
+  });
+  
+  
+
     // Gambar karakter di posisi baru
     ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
 
@@ -193,47 +226,45 @@ function gameLoop() {
         ctx.drawImage(f.img, f.x, f.y, f.width, f.height);
 
         // Deteksi tumbukan: jika buah mengenai area karakter
-        if (
-            f.y + f.height >= player.y &&
+    t     if (
+            f.y + f.height >= player.y &&  // sudut bawah buah sudah sama tinggi atau di bawah karakter
             f.x + f.width >= player.x &&
             f.x <= player.x + player.width
         ) {
+            // Tangkap buah
             score++;
-            catchSound.play(); 
-            fruits.splice(i, 1); 
+            catchSound.play(); // Putar suara tangkap buah
+            fruits.splice(i, 1); // Hapus buah yang tertangkap
             i--;
             continue;
         }
 
         // Jika buah sudah jatuh di bawah layar (gagal ditangkap)
-        if (f.y > canvas.height) {
+s       if (f.y > canvas.height) {
             misses++;
             fruits.splice(i, 1);
             i--;
-            
-            // Cek jika gagal sudah mencapai batas (3)
+            // Jika gagal 3 kali, game over
             if (misses >= maxMisses) {
                 gameOver = true;
-                gameOverSound.play(); 
-                
+                gameOverSound.play(); // Suara game over
+s               // Gambar teks Game Over
                 ctx.font = "bold 10px Joystix";
                 ctx.fillStyle = "red";
-                ctx.textAlign = "center"; // Ditambahkan agar teks di tengah
                 
                 ctx.fillText("Terimakasih sudah main!", canvas.width/2 , canvas.height/2 - 10);
                 ctx.fillText("Score Anda: " + score, canvas.width/2 , canvas.height/2 + 5);
 
                 restartBtn.style.display = "block";
-                return; // Hentikan gameLoop di sini
+                return;
             }
         }
     }
 
-    // Tampilkan skor
-    ctx.font = "bold 9px Joystix";
+    // Tampilkan skor di pojok atas (ubah koordinat untuk memindahkan posisi teks jika perlu)
+Read     ctx.font = "bold 9px Joystix";
     ctx.fillStyle = "black";
-    ctx.textAlign = "left"; // Kembalikan text align
-    ctx.fillText("Score: " + score, 23, 12); 
+    ctx.fillText("Score: " + score, 23, 12); // (10, 30) = posisi x,y teks
 
     // Lanjutkan loop game selama belum game over
     if (!gameOver) {
