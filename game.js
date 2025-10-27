@@ -49,10 +49,10 @@ const fruitAlgorithm = {
     // --- EDIT PENGATURAN DI SINI ---
     levels: [
         { afterSecond: 45, fruits: 5, minSpeed: 4, maxSpeed: 6, interval: 700 },
-        { afterSecond: 30, fruits: 3, minSpeed: 3, maxSpeed: 5, interval: 800 },
-        { afterSecond: 20, fruits: 2, minSpeed: 2, maxSpeed: 4, interval: 1000 },
-        { afterSecond: 10, fruits: 5, minSpeed: 1, maxSpeed: 3, interval: 1000 },
-        { afterSecond: 0,  fruits: 5, minSpeed: 1, maxSpeed: 2, interval: 1200 } 
+        { afterSecond: 30, fruits: 4, minSpeed: 3, maxSpeed: 5, interval: 800 },
+        { afterSecond: 20, fruits: 3, minSpeed: 2, maxSpeed: 4, interval: 1000 },
+        { afterSecond: 10, fruits: 2, minSpeed: 1, maxSpeed: 3, interval: 1000 },
+        { afterSecond: 0,  fruits: 1, minSpeed: 1, maxSpeed: 2, interval: 1200 } 
     ],
     // --- AKHIR BAGIAN EDIT ---
 
@@ -257,5 +257,6 @@ function gameLoop() {
         requestAnimationFrame(gameLoop);
   m }
 }
+
 
 
