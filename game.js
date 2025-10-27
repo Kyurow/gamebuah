@@ -48,9 +48,9 @@ var ctx = canvas.getContext("2d");
 const fruitAlgorithm = {
     // --- EDIT PENGATURAN DI SINI ---
     levels: [
-        { afterSecond: 45, fruits: 1, minSpeed: 4, maxSpeed: 6, interval: 700 },
-        { afterSecond: 30, fruits: 4, minSpeed: 3, maxSpeed: 5, interval: 800 },
-        { afterSecond: 20, fruits: 3, minSpeed: 2, maxSpeed: 4, interval: 1000 },
+        { afterSecond: 45, fruits: 108, minSpeed: 4, maxSpeed: 6, interval: 700 },
+        { afterSecond: 30, fruits: 105, minSpeed: 3, maxSpeed: 5, interval: 800 },
+        { afterSecond: 20, fruits: 103, minSpeed: 2, maxSpeed: 4, interval: 1000 },
         { afterSecond: 2, fruits: 100, minSpeed: 1, maxSpeed: 3, interval: 1000 },
         { afterSecond: 0,  fruits: 100, minSpeed: 1, maxSpeed: 2, interval: 1200 } 
     ],
@@ -257,6 +257,7 @@ function gameLoop() {
         requestAnimationFrame(gameLoop);
   m }
 }
+
 
 
 
