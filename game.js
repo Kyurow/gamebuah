@@ -83,7 +83,7 @@ const fruitAlgorithm = {
 
 // Load gambar
 var bgImage = new Image();
-bgImage.src = "assets/images/BACKGROUND2.png"; 
+bgImage.src = "assets/images/BACKGROUND3.png"; 
 var playerImage = new Image();
 playerImage.src = "assets/images/karakterfinal.png"; 
 
@@ -257,6 +257,7 @@ function gameLoop() {
         requestAnimationFrame(gameLoop);
   m }
 }
+
 
 
 
