@@ -76,26 +76,31 @@ button {
   /* Atur ukuran tombol gambar Anda. Sesuaikan angkanya! */
   width: 80px; 
   height: 80px;
-
-  /* Supaya kursor berubah jadi tangan (opsional) */
   cursor: pointer;
 
-  /* --- Perlindungan Ekstra Anti-Seleksi --- */
-  
-  /* Mencegah gambar bisa di-drag */
+  /* --- PAKET LENGKAP PENGUNCI GAMBAR --- */
+
+  /* 1. Mencegah highlight biru/oranye saat disentuh */
+  -webkit-tap-highlight-color: transparent !important;
+
+  /* 2. Mencegah seleksi (standar) */
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+
+  /* 3. INI YANG PALING PENTING: 
+     Mencegah menu pop-up (Simpan Gambar, dll) di iOS/Safari */
+  -webkit-touch-callout: none !important; 
+
+  /* 4. Mencegah gambar bisa di-drag */
   -webkit-user-drag: none;
-  
-  /* Mencegah seleksi (lagi) */
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
+  user-drag: none;
 
-  /* Mencegah highlight biru/oranye saat disentuh */
-  -webkit-tap-highlight-color: transparent;
-
-  /* MenceSgah menu 'Simpan Gambar' di iOS saat ditahan */
-  -webkit-touch-callout: none; 
+  /* 5. Mencegah browser memperlakukan ini sebagai konten */
+  pointer-events: auto; /* Pastikan tetap bisa diklik */
+  touch-action: manipulation; /* Optimasi untuk sentuhan */
 }
+
 
 
