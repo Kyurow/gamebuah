@@ -72,20 +72,30 @@ button {
   margin-top: 16px;
 }
 
-.mobile-controls button {
-  padding: 14px 24px;
-  font-size: 18px;
-  border-radius: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
+.mobile-controls img {
+  /* Atur ukuran tombol gambar Anda. Sesuaikan angkanya! */
+  width: 80px; 
+  height: 80px;
 
-  /* --- TAMBAHAN UNTUK MATIKAN SELEKSI --- */
-  user-select: none; /* Standar modern */
-  -webkit-user-select: none; /* Untuk Safari/Chrome */
-  -moz-user-select: none; /* Untuk Firefox */
-  -ms-user-select: none; /* Untuk IE/Edge */
-  -webkit-touch-callout: none; /* Mematikan menu pop-up di iOS */
+  /* Supaya kursor berubah jadi tangan (opsional) */
+  cursor: pointer;
+
+  /* --- Perlindungan Ekstra Anti-Seleksi --- */
+  
+  /* Mencegah gambar bisa di-drag */
+  -webkit-user-drag: none;
+  
+  /* Mencegah seleksi (lagi) */
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+
+  /* Mencegah highlight biru/oranye saat disentuh */
+  -webkit-tap-highlight-color: transparent;
+
+  /* MenceSgah menu 'Simpan Gambar' di iOS saat ditahan */
+  -webkit-touch-callout: none; 
 }
+
 
